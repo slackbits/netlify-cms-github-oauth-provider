@@ -48,7 +48,7 @@ app.get('/callback', (req, res) => {
       const token = oauth2.accessToken.create(result)
       mess = 'success'
       content = {
-        token: token.token.access_token,
+        token: token.access_token,
         provider: 'github'
       }
     }
