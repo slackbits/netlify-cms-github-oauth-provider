@@ -5,6 +5,7 @@ const randomstring = require('randomstring')
 const port = process.env.PORT || 3000
 const isDebug = process.env.OAUTH_DEBUG === "true" || false
 
+console.log(`DEBUG: ${process.env.OAUTH_DEBUG}`);
 if (isDebug) {
   console.log(`Client ID: ${process.env.OAUTH_CLIENT_ID}`);
   console.log(`Client SECRET: ${process.env.OAUTH_CLIENT_SECRET}`)
