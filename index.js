@@ -3,6 +3,12 @@ const express = require('express')
 const simpleOauthModule = require('simple-oauth2')
 const randomstring = require('randomstring')
 const port = process.env.PORT || 3000
+const isDebug = process.env.OAUTH_DEBUG === "true" || false
+
+if (isDebug) {
+  console.log(`Client ID: ${process.env.OAUTH_CLIENT_ID}`);
+  console.log(`Client SECRET: ${process.env.OAUTH_CLIENT_SECRET}`)
+}
 
 const app = express()
 const oauth2 = simpleOauthModule.create({
@@ -45,10 +51,22 @@ app.get('/callback', (req, res) => {
       mess = 'error'
       content = JSON.stringify(error)
     } else {
+      if (isDebug) {
+        console.log("================");
+        console.log("  RAW RESULTS");
+        console.log("================");
+        console.log(result); 
+      }
       const token = oauth2.accessToken.create(result)
+      if (isDebug) {
+        console.log("================");
+        console.log("  Paresed Token");
+        console.log("================");
+        console.log(token.token.access_token); 
+      }
       mess = 'success'
       content = {
-        token: token.access_token,
+        token: token.token.access_token,
         provider: 'github'
       }
     }
